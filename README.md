@@ -1,15 +1,20 @@
 # Ejemplo guiado en Python para EV3
 
-Esta rama contiene la version endurecida del mismo portal academico usado en la rama `sin-seguridad`.
+Estas en la rama `con-seguridad`.
 
-El objetivo didactico es comparar exactamente el mismo dominio con dos enfoques:
+Aqui vas a encontrar el mismo portal academico de la rama `sin-seguridad`, pero redisenado con principios de diseno seguro.
 
-- `sin-seguridad`: decisiones de diseno debiles.
-- `con-seguridad`: decisiones de diseno alineadas con principios de seguridad.
+## Que deberias aprender en esta rama
 
-## Dominio del ejemplo
+Al recorrer este codigo deberias poder responder:
 
-El portal permite:
+- que cambio en el diseno del sistema frente a `sin-seguridad`;
+- que principio de seguridad justifica cada cambio;
+- por que una mejor implementacion aqui nace de un mejor diseno previo.
+
+## Que hace el portal
+
+El ejemplo incluye:
 
 - inicio de sesion;
 - cambio de rol de usuarios;
@@ -17,9 +22,9 @@ El portal permite:
 - revision de archivos cargados;
 - consulta de auditoria.
 
-## Principios de diseno seguro implementados
+## Principios de diseno seguro que puedes ubicar
 
-| Principio | Donde verlo |
+| Principio | Donde observarlo |
 |---|---|
 | Seguridad por diseno | `campus_portal/portal.py`, clase `CampusPortal` y su politica de control |
 | Defensa en profundidad | `login`, `upload_attachment`, `review_upload` |
@@ -31,23 +36,28 @@ El portal permite:
 | Minimizacion de superficie de ataque | tipos de archivo permitidos y operaciones explicitamente limitadas |
 | Auditoria y monitoreo continuo | `_record_audit`, `_track_failed_login`, `get_security_dashboard` |
 
-## Por que este ejemplo sirve para EV3
+## Como explorar esta rama
 
-La comparacion entre ramas permite explicar que un mal diseno no se corrige solo con una buena implementacion. Si el sistema expone demasiados permisos, mezcla responsabilidades o filtra mas informacion de la necesaria, el codigo puede estar ordenado y aun asi seguir siendo inseguro. Esa es justamente la idea que OWASP Top 10 A04:2021 recoge en `Insecure Design`.
-
-## Ejecutar el ejemplo
+Ejecuta el recorrido principal:
 
 ```bash
 python3 run_demo.py
 ```
 
-## Ejecutar pruebas basicas
+Si quieres verificar el comportamiento esperado:
 
 ```bash
 python3 -m unittest discover -s tests
 ```
 
-## Comparar ramas
+Mientras lo revisas, fijate en estas preguntas:
+
+- por que el login ya no revela detalles innecesarios;
+- por que un estudiante no puede cambiar su propio rol;
+- por que ya no se acepta cualquier archivo;
+- por que la auditoria ya no esta disponible para todos.
+
+## Como compararla con la rama insegura
 
 ```bash
 git checkout sin-seguridad
@@ -55,13 +65,9 @@ git checkout con-seguridad
 git diff sin-seguridad..con-seguridad
 ```
 
-## Recorrido sugerido en clase
+## Idea clave
 
-1. Ejecutar `python3 run_demo.py` en `sin-seguridad`.
-2. Pedir al grupo que identifique errores de diseno.
-3. Cambiar a `con-seguridad`.
-4. Volver a ejecutar `python3 run_demo.py`.
-5. Relacionar cada cambio con un principio de diseno seguro.
+Este ejemplo busca que veas algo concreto: un mal diseno no se corrige solo con una buena implementacion. Si el sistema nace con permisos excesivos, flujos mal separados o salidas demasiado expuestas, el codigo puede verse ordenado y seguir siendo inseguro. Esa es justamente la idea de `OWASP Top 10 A04:2021 Insecure Design`.
 
 ## Estructura del proyecto
 
