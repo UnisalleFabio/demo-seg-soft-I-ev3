@@ -1,12 +1,22 @@
 # Ejemplo guiado en Python para EV3
 
-Esta rama contiene una version intencionalmente insegura de un portal academico pequeno.
+Estas en la rama `sin-seguridad`.
 
-El objetivo no es mostrar "codigo feo", sino decisiones de diseno debiles que luego se corregiran en la rama `con-seguridad`.
+Aqui vas a encontrar una version intencionalmente insegura de un portal academico pequeno. La idea no es que mires "codigo malo" por estilo, sino decisiones de diseno debiles que luego podras contrastar con la rama `con-seguridad`.
 
-## Dominio del ejemplo
+## Que deberias observar en esta rama
 
-El portal permite:
+Mientras recorres el ejemplo, intenta detectar:
+
+- que informacion se expone de mas;
+- que operaciones tienen permisos excesivos;
+- donde se mezclan responsabilidades que deberian separarse;
+- que entradas aceptan mas de lo necesario;
+- que eventos importantes no quedan auditados correctamente.
+
+## Que hace el portal
+
+El ejemplo incluye:
 
 - inicio de sesion;
 - cambio de rol de usuarios;
@@ -14,7 +24,7 @@ El portal permite:
 - revision de archivos cargados;
 - consulta de un tablero interno.
 
-## Problemas de diseno que aparecen en esta rama
+## Problemas de diseno presentes
 
 - mensajes de error demasiado detallados;
 - exposicion de datos sensibles en las respuestas;
@@ -24,22 +34,29 @@ El portal permite:
 - ausencia de auditoria real;
 - tablero interno expuesto a cualquier usuario.
 
-## Ejecutar el ejemplo
+## Como explorarlo
+
+Ejecuta el recorrido principal:
 
 ```bash
 python3 run_demo.py
 ```
 
-## Recorrido sugerido en clase
+Mientras lo haces, preguntate:
 
-1. Ejecutar `python3 run_demo.py`.
-2. Identificar que decisiones de diseno hacen posible cada problema.
-3. Pasar a la rama `con-seguridad`.
-4. Comparar como cambia el mismo sistema cuando el diseno incorpora principios de seguridad.
+- que principio de diseno seguro esta ausente aqui;
+- que parte del sistema esta demasiado expuesta;
+- por que este problema no se arregla solo "escribiendo mejor codigo".
 
 ## Siguiente paso
+
+Cuando termines de identificar problemas, compara con la rama segura:
 
 ```bash
 git checkout con-seguridad
 git diff sin-seguridad..con-seguridad
 ```
+
+## Idea clave
+
+Esta rama te ayuda a ver algo importante para el EV3: muchos problemas no nacen de un error pequeno de implementacion, sino de decisiones de diseno inseguras. Por eso OWASP Top 10 A04:2021 habla de `Insecure Design`.
