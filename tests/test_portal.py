@@ -1,4 +1,4 @@
-"""Pruebas basicas para la implementacion segura."""
+"""Pruebas básicas para la implementación segura."""
 
 import unittest
 
@@ -10,7 +10,7 @@ class CampusPortalTests(unittest.TestCase):
         portal = CampusPortal()
         response = portal.login("desconocido", "123")
         self.assertFalse(response["ok"])
-        self.assertEqual(response["error"], "Operacion rechazada")
+        self.assertEqual(response["error"], "Operación rechazada")
 
     def test_student_cannot_change_own_role(self):
         portal = CampusPortal()

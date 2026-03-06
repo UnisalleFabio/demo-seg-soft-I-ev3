@@ -1,4 +1,4 @@
-"""Implementacion con principios de diseno seguro para el EV3."""
+"""Implementación con principios de diseño seguro para el EV3."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ class SecuritySettings:
     )
 
 
-# Principio: privilegio minimo. Cada rol recibe solo las acciones que necesita.
+# Principio: privilegio mínimo. Cada rol recibe solo las acciones que necesita.
 PERMISSIONS = {
     "student": frozenset({"login", "upload_attachment", "view_profile"}),
     "teacher": frozenset({"login", "review_upload", "view_profile"}),
@@ -40,10 +40,10 @@ class AuditEvent:
 
 
 class CampusPortal:
-    """Portal pequeno que aplica principios de diseno seguro."""
+    """Portal pequeño que aplica principios de diseño seguro."""
 
     def __init__(self, settings: SecuritySettings | None = None):
-        # Principio: seguridad por diseno. La politica de seguridad se define
+        # Principio: seguridad por diseño. La política de seguridad se define
         # como parte del servicio y no como un parche externo posterior.
         self.settings = settings or SecuritySettings()
         self.users = build_users()
@@ -59,26 +59,26 @@ class CampusPortal:
         # Principio: falla segura. Si no podemos validar credenciales, negamos.
         if user is None or attempted_hash != user["password_hash"]:
             self._track_failed_login(actor)
-            return {"ok": False, "error": "Operacion rechazada"}
+            return {"ok": False, "error": "Operación rechazada"}
 
         self.failed_logins[actor] = 0
-        self._record_audit(actor, "login", "allowed", "Inicio de sesion exitoso")
+        self._record_audit(actor, "login", "allowed", "Inicio de sesión exitoso")
         return {
             "ok": True,
-            # Principio: validacion de salidas. No exponemos hash ni debug.
+            # Principio: validación de salidas. No exponemos hash ni debug.
             "user": self._public_user_view(username),
         }
 
     def change_role(self, actor: str, target: str, new_role: str):
-        # Principio: separacion de responsabilidades. Solo admin cambia roles
-        # y no permitimos autopromocion como atajo de control.
+        # Principio: separación de responsabilidades. Solo admin cambia roles
+        # y no permitimos autopromoción como atajo de control.
         denial = self._require_permission(actor, "change_role")
         if denial:
             return denial
         if actor == target:
-            return self._deny(actor, "change_role", "No se permite autopromocion")
+            return self._deny(actor, "change_role", "No se permite autopromoción")
         if target not in self.users or new_role not in PERMISSIONS:
-            return self._deny(actor, "change_role", "Solicitud de cambio invalida")
+            return self._deny(actor, "change_role", "Solicitud de cambio inválida")
 
         old_role = self.users[target]["role"]
         self.users[target]["role"] = new_role
@@ -115,7 +115,7 @@ class CampusPortal:
         self._record_audit(actor, "upload_attachment", "allowed", file_record["stored_as"])
         return {
             "ok": True,
-            # Principio: validacion de salidas. No exponemos ruta publica directa.
+            # Principio: validación de salidas. No exponemos ruta pública directa.
             "file": self._public_upload_view(file_record),
         }
 
@@ -126,12 +126,12 @@ class CampusPortal:
         if index < 0 or index >= len(self.uploads):
             return self._deny(actor, "review_upload", "Archivo inexistente")
         if review_status not in {"approved", "rejected"}:
-            return self._deny(actor, "review_upload", "Estado de revision invalido")
+            return self._deny(actor, "review_upload", "Estado de revisión inválido")
 
         upload = self.uploads[index]
         upload["review_status"] = review_status
         upload["reviewed_by"] = actor
-        self._record_audit(actor, "review_upload", "allowed", f"Revision {review_status}")
+        self._record_audit(actor, "review_upload", "allowed", f"Revisión {review_status}")
         return {"ok": True, "file": self._public_upload_view(upload)}
 
     def get_security_dashboard(self, actor: str):
@@ -139,7 +139,7 @@ class CampusPortal:
         if denial:
             return denial
 
-        # Principio: auditoria y monitoreo continuo. El dashboard resume
+        # Principio: auditoría y monitoreo continuo. El dashboard resume
         # eventos relevantes sin exponer datos sensibles de usuarios.
         failed_logins = len(
             [event for event in self.audit_log if event.action == "login" and event.status == "denied"]
@@ -160,27 +160,27 @@ class CampusPortal:
 
     def _require_permission(self, actor: str, action: str):
         user = self.users.get(actor)
-        # Principio: seguridad por defecto. Si no existe permiso explicito,
-        # negamos la operacion.
+        # Principio: seguridad por defecto. Si no existe permiso explícito,
+        # negamos la operación.
         if user is None:
             return self._deny(actor, action, "Actor desconocido")
         role = user["role"]
         allowed_actions = PERMISSIONS.get(role, frozenset())
         if action not in allowed_actions:
-            return self._deny(actor, action, "Operacion no autorizada")
+            return self._deny(actor, action, "Operación no autorizada")
         return None
 
     def _validate_upload(self, filename: str, content_type: str, size: int):
-        # Principio: validacion de entradas y salidas. El archivo se valida por
-        # nombre, tipo y tamano antes de aceptarse.
+        # Principio: validación de entradas y salidas. El archivo se valida por
+        # nombre, tipo y tamaño antes de aceptarse.
         if not filename or len(filename) > 80:
-            return "Nombre de archivo invalido"
+            return "Nombre de archivo inválido"
         if content_type not in self.settings.allowed_upload_types:
-            # Principio: minimizacion de superficie de ataque. Solo aceptamos
+            # Principio: minimización de superficie de ataque. Solo aceptamos
             # tipos de archivo necesarios para el caso de negocio.
             return "Tipo de archivo no permitido"
         if size <= 0 or size > self.settings.max_upload_size:
-            return "Tamano de archivo no permitido"
+            return "Tamaño de archivo no permitido"
         return None
 
     def _sanitize_filename(self, filename: str):
@@ -217,17 +217,17 @@ class CampusPortal:
         self.audit_log.append(event)
 
     def _track_failed_login(self, actor: str):
-        # Principio: auditoria y monitoreo continuo. Registramos fallos y
-        # elevamos una alerta simple cuando hay repeticion sospechosa.
+        # Principio: auditoría y monitoreo continuo. Registramos fallos y
+        # elevamos una alerta simple cuando hay repetición sospechosa.
         attempts = self.failed_logins.get(actor, 0) + 1
         self.failed_logins[actor] = attempts
-        detail = "Credenciales invalidas"
+        detail = "Credenciales inválidas"
         if attempts >= 3:
-            detail = "Patron de login sospechoso"
+            detail = "Patrón de login sospechoso"
         self._record_audit(actor, "login", "denied", detail)
 
     def _deny(self, actor: str, action: str, detail: str):
-        # Principio: falla segura. Rechazamos la operacion y registramos el
-        # motivo sin exponer detalles internos en la respuesta publica.
+        # Principio: falla segura. Rechazamos la operación y registramos el
+        # motivo sin exponer detalles internos en la respuesta pública.
         self._record_audit(actor, action, "denied", detail)
-        return {"ok": False, "error": "Operacion rechazada"}
+        return {"ok": False, "error": "Operación rechazada"}
