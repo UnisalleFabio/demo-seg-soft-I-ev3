@@ -1,10 +1,10 @@
-"""Implementacion intencionalmente insegura del portal academico."""
+"""Implementación intencionalmente insegura del portal académico."""
 
 from campus_portal.data import AUDIT_LOG, UPLOADS, USERS
 
 
 class CampusPortal:
-    """Portal con decisiones de diseno debiles para uso didactico."""
+    """Portal con decisiones de diseño débiles para uso didáctico."""
 
     def login(self, username, password):
         user = USERS.get(username)
@@ -17,12 +17,12 @@ class CampusPortal:
         if user["password"] != password:
             return {
                 "ok": False,
-                "error": f"La contrasena de {username} no coincide",
+                "error": f"La contraseña de {username} no coincide",
             }
 
         return {
             "ok": True,
-            "message": "Inicio de sesion correcto",
+            "message": "Inicio de sesión correcto",
             "user": {
                 "username": username,
                 "role": user["role"],
@@ -42,7 +42,7 @@ class CampusPortal:
         USERS[target]["role"] = new_role
         return {
             "ok": True,
-            "message": f"{actor} cambio el rol de {target}",
+            "message": f"{actor} cambió el rol de {target}",
             "before": old_role,
             "after": new_role,
             "user_state": USERS[target],

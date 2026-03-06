@@ -1,40 +1,40 @@
 # Ejemplo guiado en Python para EV3
 
-Estas en la rama `sin-seguridad`.
+Estás en la rama `sin-seguridad`.
 
-Aqui vas a encontrar una version intencionalmente insegura de un portal academico pequeno. La idea no es que mires "codigo malo" por estilo, sino decisiones de diseno debiles que luego podras contrastar con la rama `con-seguridad`.
+Aquí vas a encontrar una versión intencionalmente insegura de un portal académico pequeño. La idea no es que mires "código malo" por estilo, sino decisiones de diseño débiles que luego podrás contrastar con la rama `con-seguridad`.
 
-## Que deberias observar en esta rama
+## Qué deberías observar en esta rama
 
 Mientras recorres el ejemplo, intenta detectar:
 
-- que informacion se expone de mas;
-- que operaciones tienen permisos excesivos;
-- donde se mezclan responsabilidades que deberian separarse;
-- que entradas aceptan mas de lo necesario;
-- que eventos importantes no quedan auditados correctamente.
+- qué información se expone de más;
+- qué operaciones tienen permisos excesivos;
+- dónde se mezclan responsabilidades que deberían separarse;
+- qué entradas aceptan más de lo necesario;
+- qué eventos importantes no quedan auditados correctamente.
 
-## Que hace el portal
+## Qué hace el portal
 
 El ejemplo incluye:
 
-- inicio de sesion;
+- inicio de sesión;
 - cambio de rol de usuarios;
 - carga de archivos de soporte;
-- revision de archivos cargados;
+- revisión de archivos cargados;
 - consulta de un tablero interno.
 
-## Problemas de diseno presentes
+## Problemas de diseño presentes
 
 - mensajes de error demasiado detallados;
-- exposicion de datos sensibles en las respuestas;
+- exposición de datos sensibles en las respuestas;
 - cambios de rol sin control de privilegios;
 - mezcla de responsabilidades entre estudiante, docente y administrador;
-- carga de archivos sin validacion;
-- ausencia de auditoria real;
+- carga de archivos sin validación;
+- ausencia de auditoría real;
 - tablero interno expuesto a cualquier usuario.
 
-## Como explorarlo
+## Cómo explorarlo
 
 Ejecuta el recorrido principal:
 
@@ -42,11 +42,11 @@ Ejecuta el recorrido principal:
 python3 run_demo.py
 ```
 
-Mientras lo haces, preguntate:
+Mientras lo haces, pregúntate:
 
-- que principio de diseno seguro esta ausente aqui;
-- que parte del sistema esta demasiado expuesta;
-- por que este problema no se arregla solo "escribiendo mejor codigo".
+- qué principio de diseño seguro está ausente aquí;
+- qué parte del sistema está demasiado expuesta;
+- por qué este problema no se arregla solo "escribiendo mejor código".
 
 ## Siguiente paso
 
@@ -59,4 +59,4 @@ git diff sin-seguridad..con-seguridad
 
 ## Idea clave
 
-Esta rama te ayuda a ver algo importante para el EV3: muchos problemas no nacen de un error pequeno de implementacion, sino de decisiones de diseno inseguras. Por eso OWASP Top 10 A04:2021 habla de `Insecure Design`.
+Esta rama te ayuda a ver algo importante para el EV3: muchos problemas no nacen de un error pequeño de implementación, sino de decisiones de diseño inseguras. Por eso OWASP Top 10 A04:2021 habla de `Insecure Design`.

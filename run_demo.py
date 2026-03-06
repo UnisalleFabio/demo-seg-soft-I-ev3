@@ -1,4 +1,4 @@
-"""Demostracion rapida de la rama sin seguridad."""
+"""Demostración rápida de la rama sin seguridad."""
 
 from pprint import pprint
 
@@ -13,14 +13,14 @@ def print_step(title):
 def main():
     portal = CampusPortal()
 
-    print_step("1. Login con fuga de informacion")
+    print_step("1. Login con fuga de información")
     pprint(portal.login("desconocido", "123"))
     pprint(portal.login("ana", "123456"))
 
     print_step("2. Un estudiante se asigna rol de admin")
     pprint(portal.change_role("ana", "ana", "admin"))
 
-    print_step("3. Se carga un archivo peligroso sin validacion")
+    print_step("3. Se carga un archivo peligroso sin validación")
     pprint(portal.upload_attachment("ana", "script.sh", "text/x-shellscript", 9_000_000))
 
     print_step("4. Cualquier usuario puede revisar el archivo")
