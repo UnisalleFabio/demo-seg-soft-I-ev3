@@ -13,20 +13,20 @@ def print_step(title):
 def main():
     portal = CampusPortal()
 
-    print_step("1. Login con fuga de información")
+    print_step("1. Flujo de inicio de sesión")
     pprint(portal.login("desconocido", "123"))
     pprint(portal.login("ana", "123456"))
 
-    print_step("2. Un estudiante se asigna rol de admin")
+    print_step("2. Cambio de rol de usuario")
     pprint(portal.change_role("ana", "ana", "admin"))
 
-    print_step("3. Se carga un archivo peligroso sin validación")
+    print_step("3. Carga de archivo adjunto")
     pprint(portal.upload_attachment("ana", "script.sh", "text/x-shellscript", 9_000_000))
 
-    print_step("4. Cualquier usuario puede revisar el archivo")
+    print_step("4. Revisión de archivo cargado")
     pprint(portal.review_upload("ana", 0, "approved"))
 
-    print_step("5. Cualquier usuario puede ver el tablero interno")
+    print_step("5. Consulta de tablero interno")
     pprint(portal.get_security_dashboard("ana"))
 
 
