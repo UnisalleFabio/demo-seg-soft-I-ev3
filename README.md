@@ -1,24 +1,45 @@
 # Ejemplo guiado en Python para EV3
 
-Este repositorio contiene un ejemplo guiado para el EV3 de `Seguridad de Software I`.
+Esta rama contiene una version intencionalmente insegura de un portal academico pequeno.
 
-La idea didáctica es comparar el mismo portal académico pequeño en dos ramas:
+El objetivo no es mostrar "codigo feo", sino decisiones de diseno debiles que luego se corregiran en la rama `con-seguridad`.
 
-- `sin-seguridad`: implementación deliberadamente débil.
-- `con-seguridad`: implementación endurecida con principios de diseño seguro comentados en el código.
+## Dominio del ejemplo
 
-## Flujo sugerido
+El portal permite:
 
-1. Revisar la rama `sin-seguridad`.
-2. Identificar decisiones de diseño débiles.
-3. Cambiar a `con-seguridad`.
-4. Comparar qué principios se aplicaron y por qué.
+- inicio de sesion;
+- cambio de rol de usuarios;
+- carga de archivos de soporte;
+- revision de archivos cargados;
+- consulta de un tablero interno.
 
-## Comandos útiles
+## Problemas de diseno que aparecen en esta rama
+
+- mensajes de error demasiado detallados;
+- exposicion de datos sensibles en las respuestas;
+- cambios de rol sin control de privilegios;
+- mezcla de responsabilidades entre estudiante, docente y administrador;
+- carga de archivos sin validacion;
+- ausencia de auditoria real;
+- tablero interno expuesto a cualquier usuario.
+
+## Ejecutar el ejemplo
 
 ```bash
-git branch
-git checkout sin-seguridad
+python3 run_demo.py
+```
+
+## Recorrido sugerido en clase
+
+1. Ejecutar `python3 run_demo.py`.
+2. Identificar que decisiones de diseno hacen posible cada problema.
+3. Pasar a la rama `con-seguridad`.
+4. Comparar como cambia el mismo sistema cuando el diseno incorpora principios de seguridad.
+
+## Siguiente paso
+
+```bash
 git checkout con-seguridad
 git diff sin-seguridad..con-seguridad
 ```
