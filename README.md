@@ -57,6 +57,10 @@ git checkout con-seguridad
 git diff sin-seguridad..con-seguridad
 ```
 
+## El agente de IA de la ronda 5
+
+En `demo_agente_ia/` está la demostración del agente de soporte que opera este portal leyendo un ticket externo con instrucciones ocultas. Se ejecuta desde la raíz del repositorio con `python3 -B demo_agente_ia/agente_soporte.py`, y su [README](demo_agente_ia/README.md) explica qué demuestra y en qué momento conviene correrlo.
+
 ## Idea clave
 
 Esta rama te ayuda a ver algo importante para el EV3: muchos problemas no nacen de un error pequeño de implementación, sino de decisiones de diseño inseguras. Por eso OWASP Top 10 A04:2021 habla de `Insecure Design`.
