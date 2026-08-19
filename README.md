@@ -65,6 +65,10 @@ git checkout con-seguridad
 git diff sin-seguridad..con-seguridad
 ```
 
+## El agente de IA de la ronda 5
+
+En `demo_agente_ia/` está la demostración del agente de soporte que opera este portal leyendo un ticket externo con instrucciones ocultas. Se ejecuta desde la raíz del repositorio con `python3 -B demo_agente_ia/agente_soporte.py`, y su [README](demo_agente_ia/README.md) explica qué demuestra y en qué momento conviene correrlo. En esta rama el ataque queda bloqueado y auditado.
+
 ## Idea clave
 
 Este ejemplo busca que veas algo concreto: un mal diseño no se corrige solo con una buena implementación. Si el sistema nace con permisos excesivos, flujos mal separados o salidas demasiado expuestas, el código puede verse ordenado y seguir siendo inseguro. Esa es justamente la idea de `OWASP Top 10 A04:2021 Insecure Design`.
@@ -76,6 +80,10 @@ campus_portal/
   __init__.py
   data.py
   portal.py
+demo_agente_ia/
+  __init__.py
+  agente_soporte.py
+  ticket_soporte.txt
 run_demo.py
 tests/
   test_portal.py
